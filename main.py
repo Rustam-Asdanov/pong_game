@@ -3,7 +3,12 @@ from turtle import Screen
 from game_board import GameBoard, BOARD_HEIGHT, BOARD_WIDTH
 from player import Player
 from score_board import ScoreBoard
-from time import sleep
+from ball import Ball
+
+SCREEN_LEFT_END = -1 * BOARD_WIDTH / 2
+SCREEN_RIGHT_END = BOARD_WIDTH / 2
+SCREEN_TOP_END = BOARD_HEIGHT / 2
+SCREEN_BOTTOM_END = -1 * BOARD_HEIGHT / 2
 
 # Screen properties
 screen = Screen()
@@ -11,6 +16,7 @@ screen.setup(width=BOARD_WIDTH, height=BOARD_HEIGHT)
 screen.title("Pong game")
 screen.bgcolor("black")
 screen.listen()
+screen.tracer(0)
 game_over = False
 
 
@@ -43,8 +49,28 @@ screen.onkeypress(fun=player_2.move_down, key="Down")
 
 screen.onkey(fun=exit_game, key="Escape")
 
+ball = Ball()
+
 while not game_over:
     screen.update()
+    ball.move()
+    time.sleep(0.01)
 
+    if ball.xcor() > 380:
+        score.add_score(1)
+        score.update()
+        ball.start_position()
+
+    if ball.xcor() < -380:
+        score.add_score(2)
+        score.update()
+        ball.start_position()
+
+    if ball.ycor() > SCREEN_TOP_END - 20 or ball.ycor() < SCREEN_BOTTOM_END + 20:
+        ball.bounce_y()
+
+    if ball.distance(player_2) < 50 and ball.xcor() > SCREEN_RIGHT_END-30 or \
+            ball.distance(player_1) < 50 and ball.xcor() < SCREEN_LEFT_END + 30:
+        ball.bounce_x()
 
 screen.exitonclick()

@@ -6,16 +6,17 @@ class ScoreBoard(Turtle):
 
     def __init__(self):
         super().__init__()
+        self.hideturtle()
         self.player_one_score = 0
         self.player_two_score = 0
         self.penup()
         self.color("red")
-        self.hideturtle()
         self.speed("fastest")
         self.setposition(x=0, y=BOARD_HEIGHT / 2 - 60)
         self.update()
 
     def update(self):
+        self.clear()
         self.write(arg=f"{self.player_one_score} : {self.player_two_score}",
                    align="center", font=("Arial", 40, "bold"))
 
@@ -25,3 +26,4 @@ class ScoreBoard(Turtle):
 
         if player_id == 2:
             self.player_two_score += 1
+

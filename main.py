@@ -1,12 +1,14 @@
 from turtle import Screen
-from game_board import GameBoard
+from game_board import GameBoard, BOARD_HEIGHT, BOARD_WIDTH
 from player import Player
 from score_board import ScoreBoard
 
 screen = Screen()
-screen.setup(width=600, height=400)
+screen.setup(width=BOARD_WIDTH, height=BOARD_HEIGHT)
+screen.title("Pong game")
 screen.bgcolor("black")
 
 board = GameBoard()
+board.create()
 
 screen.exitonclick()
